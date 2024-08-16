@@ -5,7 +5,6 @@ import picocli.CommandLine.Parameters;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.SortedMap;
@@ -45,12 +44,14 @@ public class OptionSection implements Callable<Void> {
         mixture.forEach((key, value) -> {
             var valueFromMap1 = map1.get(key);
             var valueFromMap2 = map2.get(key);
-            String prefix = valueFromMap1 == null ? "+ " : (valueFromMap1.equals(value) ? (valueFromMap2 == null ? "- " : "  ") : "- ");
-            diff.append(prefix).append(key).append(": ").append((valueFromMap1 != null && !valueFromMap1.equals(value)) ? valueFromMap1 : value).append("\n");
-
+            String prefix = "+ ";
             if (valueFromMap1 != null && !valueFromMap1.equals(value)) {
-                diff.append("+ ").append(key).append(": ").append(value).append("\n");
+                diff.append("- ").append(key).append(": ").append(valueFromMap1).append("\n");
             }
+            else {
+                prefix = valueFromMap2 == null ? "- " : (valueFromMap1 == null ? "+ " : "  ");
+            }
+            diff.append(prefix).append(key).append(": ").append(value).append("\n");
         });
         return diff.toString();
     }
