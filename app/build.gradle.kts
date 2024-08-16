@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.11.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
     implementation("info.picocli:picocli:4.7.6")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.2")
 }
@@ -38,3 +38,4 @@ tasks.test {
 }
 
 tasks.jacocoTestReport { reports { xml.required.set(true) } }
+

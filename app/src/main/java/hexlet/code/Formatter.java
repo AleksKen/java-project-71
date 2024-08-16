@@ -23,7 +23,7 @@ public class Formatter {
                 default -> throw new IllegalArgumentException("Unexpected key description: " + description);
             }
         });
-        return diff.toString();
+        return diff.deleteCharAt(diff.length() - 1).toString();
     }
 
     private static void addToDiff(StringBuilder diff, String prefix, String key, Object value) {
