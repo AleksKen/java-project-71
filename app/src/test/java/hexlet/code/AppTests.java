@@ -1,12 +1,23 @@
 package hexlet.code;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
+
+import java.nio.file.Path;
 
 public class AppTests {
     @Test
     public void testGetDiffJson() throws Exception {
-        String filePath1 = "/Users/mariakonasova/Hexlet/java-project-71/app/src/main/resources/file1.json";
-        String filePath2 = "/Users/mariakonasova/Hexlet/java-project-71/app/src/main/resources/file2.json";
-        App.main(new String[]{filePath1, filePath2});
+        Path filePath1 = Path.of("/Users/mariakonasova/Hexlet/java-project-71/app/src/main/resources/file1.json");
+        Path filePath2 = Path.of("/Users/mariakonasova/Hexlet/java-project-71/app/src/main/resources/file2.json");
+        String expectedDiff = "- follow: false\n"
+                + "  host: hexlet.io\n"
+                + "- proxy: 123.234.53.22\n"
+                + "- timeout: 50\n"
+                + "+ timeout: 20\n"
+                + "+ verbose: true\n";
+        String diff = App.getDifference(filePath1, filePath2);
+        assertEquals(expectedDiff, diff);
     }
 }
