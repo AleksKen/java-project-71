@@ -13,18 +13,20 @@ public class Formatter {
 
         descriptionKeys.forEach((key, description) -> {
             switch (description) {
-                case "changed" -> diff.append("- ").append(key).append(": ").append(map1.get(key)).append("\n")
-                    .append("+ ").append(key).append(": ").append(map2.get(key)).append("\n");
-
-                case "deleted" -> diff.append("- ").append(key).append(": ").append(map1.get(key)).append("\n");
-
-                case "added" -> diff.append("+ ").append(key).append(": ").append(map2.get(key)).append("\n");
-
-                case "immutable" -> diff.append("  ").append(key).append(": ").append(map2.get(key)).append("\n");
-
-                default -> throw new RuntimeException();
+                case "changed" -> {
+                    addToDiff(diff, "-", key, map1.get(key));
+                    addToDiff(diff, "+", key, map2.get(key));
+                }
+                case "deleted" -> addToDiff(diff, "-", key, map1.get(key));
+                case "added" -> addToDiff(diff, "+", key, map2.get(key));
+                case "immutable" -> addToDiff(diff, " ", key, map2.get(key));
+                default -> throw new IllegalArgumentException("Unexpected key description: " + description);
             }
         });
         return diff.toString();
+    }
+
+    private static void addToDiff(StringBuilder diff, String prefix, String key, Object value) {
+        diff.append(prefix).append(" ").append(key).append(": ").append(value).append("\n");
     }
 }
