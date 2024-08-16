@@ -20,8 +20,6 @@ jobs:
           arguments: 'build checkstyleMain checkstyleTest'
           gradle-version: 8.7
           build-root-directory: app
-      - run: ./gradlew checkstyleMain
-      - run: ./gradlew test
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
         env:
