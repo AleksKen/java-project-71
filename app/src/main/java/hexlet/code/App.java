@@ -7,6 +7,8 @@ import picocli.CommandLine.Option;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 
@@ -27,33 +29,30 @@ public class App implements Callable<Void> {
     public Void call() throws Exception {
         Path file1 = Paths.get(filepath1);
         Path file2 = Paths.get(filepath2);
-        System.out.println(getDifference(file1, file2));
+        System.out.println(Formatter.getDifferenceStylish(file1, file2));
         return null;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         CommandLine.call(new App(), args);
     }
 
-    public static String getDifference(Path file1, Path file2) throws Exception {
-        TreeMap<String, Object> map1 = Parser.parseFile(file1);
-        TreeMap<String, Object> map2 = Parser.parseFile(file2);
+    public static LinkedHashMap<String, String> getDescriptionKeys(HashMap<String, Object> map1,
+                                                                   HashMap<String, Object> map2) {
         TreeMap<String, Object> mixture = new TreeMap<>(map1);
         mixture.putAll(map2);
-        StringBuilder diff = new StringBuilder();
+        LinkedHashMap<String, String> descriptionKeys = new LinkedHashMap<>();
 
         mixture.forEach((key, value) -> {
             var valueFromMap1 = map1.get(key);
-            var valueFromMap2 = map2.get(key);
-            String prefix = "+ ";
-            if (valueFromMap1 != null && !valueFromMap1.equals(value)) {
-                diff.append("- ").append(key).append(": ").append(valueFromMap1).append("\n");
+            if (map1.containsKey(key) && (valueFromMap1 == null || !valueFromMap1.equals(value))) {
+                descriptionKeys.put(key, "changed");
             } else {
-                prefix = valueFromMap2 == null ? "- " : (valueFromMap1 == null ? "+ " : "  ");
+                String status = !map2.containsKey(key) ? "deleted" : (!map1.containsKey(key) ? "added" : "immutable");
+                descriptionKeys.put(key, status);
             }
-            diff.append(prefix).append(key).append(": ").append(value).append("\n");
         });
-        return diff.toString();
+        return descriptionKeys;
     }
 
 }
