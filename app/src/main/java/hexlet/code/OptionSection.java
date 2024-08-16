@@ -27,17 +27,13 @@ public class OptionSection implements Callable<Void> {
     String format;
 
     @Override
-    public Void call() {
+    public Void call() throws Exception{
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            Path file1 = Paths.get(filepath1);
-            Path file2 = Paths.get(filepath2);
-            TreeMap<String, Object> map1 = mapper.readValue(file1.toFile(), TreeMap.class);
-            TreeMap<String, Object> map2 = mapper.readValue(file2.toFile(), TreeMap.class);
-            System.out.println(getDifference(map1, map2));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Path file1 = Paths.get(filepath1);
+        Path file2 = Paths.get(filepath2);
+        TreeMap<String, Object> map1 = mapper.readValue(file1.toFile(), TreeMap.class);
+        TreeMap<String, Object> map2 = mapper.readValue(file2.toFile(), TreeMap.class);
+        System.out.println(getDifference(map1, map2));
         return null;
     }
 
