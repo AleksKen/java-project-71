@@ -11,10 +11,9 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 
-@Command(version = {
-        "@|blue Versioned Command 1.0|@",
-        "@|red,bg(white) (c) 2024|@"},
-        name = "gendiff", description = "Compares two configuration files and shows a difference.",
+@Command(version = {"@|blue Versioned Command 1.0|@", "@|red,bg(white) (c) 2024|@"},
+        name = "gendiff",
+        description = "Compares two configuration files and shows a difference.",
         mixinStandardHelpOptions = true)
 public class OptionSection implements Callable<Void> {
     @Parameters(paramLabel = "filepath1", description = "path to first file")
@@ -26,7 +25,7 @@ public class OptionSection implements Callable<Void> {
     String format;
 
     @Override
-    public Void call() throws Exception{
+    public Void call() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         Path file1 = Paths.get(filepath1);
         Path file2 = Paths.get(filepath2);
@@ -47,8 +46,7 @@ public class OptionSection implements Callable<Void> {
             String prefix = "+ ";
             if (valueFromMap1 != null && !valueFromMap1.equals(value)) {
                 diff.append("- ").append(key).append(": ").append(valueFromMap1).append("\n");
-            }
-            else {
+            } else {
                 prefix = valueFromMap2 == null ? "- " : (valueFromMap1 == null ? "+ " : "  ");
             }
             diff.append(prefix).append(key).append(": ").append(value).append("\n");
