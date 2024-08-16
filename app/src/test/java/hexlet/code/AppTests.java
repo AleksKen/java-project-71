@@ -9,8 +9,8 @@ import java.nio.file.Path;
 public class AppTests {
     @Test
     public void testGetDiffJson() throws Exception {
-        Path filePath1 = Path.of("/Users/mariakonasova/Hexlet/java-project-71/app/src/main/resources/file1.json");
-        Path filePath2 = Path.of("/Users/mariakonasova/Hexlet/java-project-71/app/src/main/resources/file2.json");
+        Path filePath1 = Path.of("src/test/resources/file1.json");
+        Path filePath2 = Path.of("src/test/resources/file2.json");
         String expectedDiff = "- follow: false\n"
                 + "  host: hexlet.io\n"
                 + "- proxy: 123.234.53.22\n"
