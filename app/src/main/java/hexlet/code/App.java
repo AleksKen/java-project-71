@@ -1,6 +1,5 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import picocli.CommandLine;
 import picocli.CommandLine.Parameters;
 import picocli.CommandLine.Command;
@@ -37,9 +36,8 @@ public class App implements Callable<Void> {
     }
 
     public static String getDifference(Path file1, Path file2) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        TreeMap<String, Object> map1 = mapper.readValue(file1.toFile(), TreeMap.class);
-        TreeMap<String, Object> map2 = mapper.readValue(file2.toFile(), TreeMap.class);
+        TreeMap<String, Object> map1 = Parser.parseFile(file1);
+        TreeMap<String, Object> map2 = Parser.parseFile(file2);
         TreeMap<String, Object> mixture = new TreeMap<>(map1);
         mixture.putAll(map2);
         StringBuilder diff = new StringBuilder();

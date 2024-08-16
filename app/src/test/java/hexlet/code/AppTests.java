@@ -25,7 +25,21 @@ public class AppTests {
     }
 
     @Test
-    public void testCall() throws Exception {
+    public void testGetDiffYaml() throws Exception {
+        Path filePath1 = Path.of("src/test/resources/file1.yml");
+        Path filePath2 = Path.of("src/test/resources/file2.yml");
+        String expectedDiff = "- follow: false\n"
+                + "  host: hexlet.io\n"
+                + "- proxy: 123.234.53.22\n"
+                + "- timeout: 50\n"
+                + "+ timeout: 20\n"
+                + "+ verbose: true\n";
+        String diff = App.getDifference(filePath1, filePath2);
+        assertEquals(expectedDiff, diff);
+    }
+
+    @Test
+    public void testCallJson() throws Exception {
         String[] paths = new String[]{"src/test/resources/file1.json", "src/test/resources/file2.json"};
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
@@ -38,7 +52,26 @@ public class AppTests {
                 + "+ verbose: true\n\n";
         try {
             CommandLine.call(new App(), paths);
-            var temp = outContent.toString();
+            assertEquals(expectedDiff, outContent.toString());
+        } finally {
+            System.setOut(originalOut);
+        }
+    }
+
+    @Test
+    public void testCallYaml() throws Exception {
+        String[] paths = new String[]{"src/test/resources/file1.yml", "src/test/resources/file2.yml"};
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+        String expectedDiff = "- follow: false\n"
+                + "  host: hexlet.io\n"
+                + "- proxy: 123.234.53.22\n"
+                + "- timeout: 50\n"
+                + "+ timeout: 20\n"
+                + "+ verbose: true\n\n";
+        try {
+            CommandLine.call(new App(), paths);
             assertEquals(expectedDiff, outContent.toString());
         } finally {
             System.setOut(originalOut);
