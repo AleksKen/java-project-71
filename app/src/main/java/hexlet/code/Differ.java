@@ -19,9 +19,9 @@ public class Differ {
             var valueFromMap1 = map1.get(key);
             String status;
             if (map1.containsKey(key) && (valueFromMap1 == null || !valueFromMap1.equals(value))) {
-                status = "changed";
+                status = "updated";
             } else {
-                status = !map2.containsKey(key) ? "deleted" : (!map1.containsKey(key) ? "added" : "immutable");
+                status = !map2.containsKey(key) ? "removed" : (!map1.containsKey(key) ? "added" : "immutable");
             }
             descriptionKeys.put(key, Triple.of(status, valueFromMap1, value));
         });

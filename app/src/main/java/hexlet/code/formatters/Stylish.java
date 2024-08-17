@@ -9,11 +9,11 @@ public class Stylish {
         StringBuilder diff = new StringBuilder();
         descriptionKeys.forEach((key, descriptionAndValues) -> {
             switch (descriptionAndValues.getLeft()) {
-                case "changed" -> {
+                case "updated" -> {
                     addToDiff(diff, "-", key, descriptionAndValues.getMiddle());
                     addToDiff(diff, "+", key, descriptionAndValues.getRight());
                 }
-                case "deleted" -> addToDiff(diff, "-", key, descriptionAndValues.getMiddle());
+                case "removed" -> addToDiff(diff, "-", key, descriptionAndValues.getMiddle());
                 case "added" -> addToDiff(diff, "+", key, descriptionAndValues.getRight());
                 case "immutable" -> addToDiff(diff, " ", key, descriptionAndValues.getRight());
                 default -> throw new IllegalArgumentException("Unexpected key description: "
