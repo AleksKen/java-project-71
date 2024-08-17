@@ -22,6 +22,8 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.16.0")
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
+    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.17.2")
+    implementation ("commons-io:commons-io:2.16.1")
 }
 
 application {
