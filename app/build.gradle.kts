@@ -5,11 +5,11 @@ plugins {
     application
     checkstyle
     jacoco
+    id("io.freefair.lombok") version "6.6.3"
 }
 
 group = "hexlet.code"
 version = "1.0-SNAPSHOT"
-
 repositories {
     mavenCentral()
 }
@@ -20,6 +20,8 @@ dependencies {
     implementation("info.picocli:picocli:4.7.6")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.2")
     implementation("org.apache.commons:commons-lang3:3.16.0")
+    compileOnly("org.projectlombok:lombok:1.18.34")
+    annotationProcessor("org.projectlombok:lombok:1.18.34")
 }
 
 application {
@@ -39,4 +41,5 @@ tasks.test {
 }
 
 tasks.jacocoTestReport { reports { xml.required.set(true) } }
+
 

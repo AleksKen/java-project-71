@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StylishTest {
+public class StylishTests {
     @Test
     public void testGetDiffJson() throws Exception {
         Path filePath1 = Path.of("src/test/resources/input-json/file1.json");

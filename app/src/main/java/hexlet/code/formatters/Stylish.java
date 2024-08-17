@@ -1,23 +1,23 @@
 package hexlet.code.formatters;
 
-import org.apache.commons.lang3.tuple.Triple;
+import hexlet.code.Description;
 
 import java.util.Map;
 
 public class Stylish {
-    public static String getResult(Map<String, Triple<String, Object, Object>> descriptionKeys) {
+    public static String getResult(Map<String, Description<Object>> descriptionKeys) {
         StringBuilder diff = new StringBuilder();
         descriptionKeys.forEach((key, descriptionAndValues) -> {
-            switch (descriptionAndValues.getLeft()) {
+            switch (descriptionAndValues.getStatus()) {
                 case "updated" -> {
-                    addToDiff(diff, "-", key, descriptionAndValues.getMiddle());
-                    addToDiff(diff, "+", key, descriptionAndValues.getRight());
+                    addToDiff(diff, "-", key, descriptionAndValues.getOldValue());
+                    addToDiff(diff, "+", key, descriptionAndValues.getNewValue());
                 }
-                case "removed" -> addToDiff(diff, "-", key, descriptionAndValues.getMiddle());
-                case "added" -> addToDiff(diff, "+", key, descriptionAndValues.getRight());
-                case "immutable" -> addToDiff(diff, " ", key, descriptionAndValues.getRight());
+                case "removed" -> addToDiff(diff, "-", key, descriptionAndValues.getOldValue());
+                case "added" -> addToDiff(diff, "+", key, descriptionAndValues.getNewValue());
+                case "immutable" -> addToDiff(diff, " ", key, descriptionAndValues.getNewValue());
                 default -> throw new IllegalArgumentException("Unexpected key description: "
-                        + descriptionAndValues.getLeft());
+                        + descriptionAndValues.getStatus());
             }
         });
         return diff.deleteCharAt(diff.length() - 1).toString();
