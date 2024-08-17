@@ -30,7 +30,7 @@ public class Differ {
         HashMap<String, Object> map1 = Parser.parseFile(Path.of(filePath1));
         HashMap<String, Object> map2 = Parser.parseFile(Path.of(filePath2));
         LinkedHashMap<String, Description<Object>> descriptionKeys = getDescriptionKeys(map1, map2);
-        return Formatter.applySelectedFormat("", descriptionKeys);
+        return Formatter.applySelectedFormat("stylish", descriptionKeys);
     }
 
     public static String generate(String filePath1, String filePath2, String formatName) throws Exception {
