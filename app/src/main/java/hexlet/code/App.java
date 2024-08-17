@@ -5,8 +5,6 @@ import picocli.CommandLine.Parameters;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
 @Command(version = {"@|blue Versioned Command 1.0|@", "@|red,bg(white) (c) 2024|@"},
@@ -24,9 +22,7 @@ public class App implements Callable<Void> {
 
     @Override
     public Void call() throws Exception {
-        Path file1 = Paths.get(filepath1);
-        Path file2 = Paths.get(filepath2);
-        System.out.println(Differ.generate(file1, file2, format));
+        System.out.println(Differ.generate(filepath1, filepath2, format));
         return null;
     }
 
