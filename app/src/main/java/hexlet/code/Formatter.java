@@ -8,13 +8,17 @@ import java.io.IOException;
 import java.util.Map;
 
 public class Formatter {
+    private static final String STYLISH = "stylish";
+    private static final String PLAIN = "plain";
+    private static final String JSON = "json";
+
     public static String applySelectedFormat(String format,
                                              Map<String, Description<Object>> descriptionKeys) throws IOException {
         return switch (format) {
-            case "stylish" -> Stylish.getResult(descriptionKeys);
-            case "plain"  -> Plain.getResult(descriptionKeys);
-            case "json" -> Json.getResult(descriptionKeys);
-            default -> "";
+            case STYLISH -> Stylish.getResult(descriptionKeys);
+            case PLAIN  -> Plain.getResult(descriptionKeys);
+            case JSON -> Json.getResult(descriptionKeys);
+            default -> throw new IllegalArgumentException("Unexpected style: " + format);
         };
     }
 }

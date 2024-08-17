@@ -7,6 +7,13 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Differ {
+    private static final String UPDATED = "updated";
+    private static final String REMOVED = "removed";
+    private static final String ADDED = "added";
+    private static final String IMMUTABLE = "immutable";
+    private static final String STYLISH = "stylish";
+
+
     public static LinkedHashMap<String, Description<Object>> getDescriptionKeys(Map<String, Object> map1,
                                                                                            Map<String, Object> map2) {
         TreeMap<String, Object> mixture = new TreeMap<>(map1);
@@ -17,9 +24,9 @@ public class Differ {
             var valueFromMap1 = map1.get(key);
             String status;
             if (map1.containsKey(key) && (valueFromMap1 == null || !valueFromMap1.equals(value))) {
-                status = "updated";
+                status = UPDATED;
             } else {
-                status = !map2.containsKey(key) ? "removed" : (!map1.containsKey(key) ? "added" : "immutable");
+                status = !map2.containsKey(key) ? REMOVED : (!map1.containsKey(key) ? ADDED : IMMUTABLE);
             }
             descriptionKeys.put(key, new Description<>(status, valueFromMap1, value));
         });
@@ -30,7 +37,7 @@ public class Differ {
         HashMap<String, Object> map1 = Parser.parseFile(Path.of(filePath1));
         HashMap<String, Object> map2 = Parser.parseFile(Path.of(filePath2));
         LinkedHashMap<String, Description<Object>> descriptionKeys = getDescriptionKeys(map1, map2);
-        return Formatter.applySelectedFormat("stylish", descriptionKeys);
+        return Formatter.applySelectedFormat(STYLISH, descriptionKeys);
     }
 
     public static String generate(String filePath1, String filePath2, String formatName) throws Exception {

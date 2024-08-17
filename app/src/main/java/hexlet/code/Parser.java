@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.util.HashMap;
 
 public class Parser {
+    private static final String JSON = "json";
+    private static final String YAML = "yml";
     private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
     private static final ObjectMapper YAML_MAPPER = new ObjectMapper(new YAMLFactory());
 
@@ -21,8 +23,8 @@ public class Parser {
 
     public static HashMap<String, Object> parseFile(Path file) throws Exception {
         return switch (FilenameUtils.getExtension(String.valueOf(file))) {
-            case "json" -> parseFileJson(file);
-            case "yml" -> parseFileYaml(file);
+            case JSON -> parseFileJson(file);
+            case YAML -> parseFileYaml(file);
             default -> throw new IllegalStateException("Unexpected file's type: "
                     + FilenameUtils.getExtension(String.valueOf(file)));
         };

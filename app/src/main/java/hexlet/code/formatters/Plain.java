@@ -6,23 +6,28 @@ import org.apache.commons.lang3.ClassUtils;
 import java.util.Map;
 
 public class Plain {
+    private static final String UPDATED = "updated";
+    private static final String REMOVED = "removed";
+    private static final String ADDED = "added";
+    private static final String IMMUTABLE = "immutable";
+
     public static String getResult(Map<String, Description<Object>> descriptionKeys) {
         StringBuilder diff = new StringBuilder();
         descriptionKeys.forEach((key, descriptionAndValues) -> {
             switch (descriptionAndValues.getStatus()) {
-                case "updated" -> addToDiff(diff, key,
+                case UPDATED -> addToDiff(diff, key,
                         descriptionAndValues.getStatus(),
                         descriptionAndValues.getOldValue(),
                         descriptionAndValues.getNewValue());
-                case "removed" -> {
+                case REMOVED -> {
                     addToDiff(diff, key, descriptionAndValues.getStatus());
                     diff.append("\n");
                 }
-                case "added" -> addToDiff(diff,
+                case ADDED -> addToDiff(diff,
                         key,
                         descriptionAndValues.getStatus(),
                         descriptionAndValues.getNewValue());
-                case "immutable" -> { }
+                case IMMUTABLE -> { }
                 default -> throw new IllegalArgumentException("Unexpected key description: "
                         + descriptionAndValues.getStatus());
             }
