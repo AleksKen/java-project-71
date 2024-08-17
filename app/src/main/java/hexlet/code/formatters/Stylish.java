@@ -7,6 +7,7 @@ import java.util.Map;
 public class Stylish {
     public static String getResult(Map<String, Description<Object>> descriptionKeys) {
         StringBuilder diff = new StringBuilder();
+        diff.append("{\n");
         descriptionKeys.forEach((key, descriptionAndValues) -> {
             switch (descriptionAndValues.getStatus()) {
                 case "updated" -> {
@@ -20,10 +21,10 @@ public class Stylish {
                         + descriptionAndValues.getStatus());
             }
         });
-        return diff.deleteCharAt(diff.length() - 1).toString();
+        return diff.append("}").toString();
     }
 
     private static void addToDiff(StringBuilder diff, String prefix, String key, Object value) {
-        diff.append(prefix).append(" ").append(key).append(": ").append(value).append("\n");
+        diff.append("  ").append(prefix).append(" ").append(key).append(": ").append(value).append("\n");
     }
 }
