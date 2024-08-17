@@ -20,7 +20,7 @@ public class AppTests {
         String filePathExp = "src/test/resources/expected/expected.txt";
         String expectedDiff = Files.lines(Paths.get(filePathExp))
                 .collect(Collectors.joining("\n"));
-        String diff = Formatter.getDifferenceStylish(filePath1, filePath2);
+        String diff = Differ.generate(filePath1, filePath2, "stylish");
         assertEquals(expectedDiff, diff);
     }
 
@@ -31,7 +31,7 @@ public class AppTests {
         String filePathExp = "src/test/resources/expected/expected.txt";
         String expectedDiff = Files.lines(Paths.get(filePathExp))
                 .collect(Collectors.joining("\n"));
-        String diff = Formatter.getDifferenceStylish(filePath1, filePath2);
+        String diff = Differ.generate(filePath1, filePath2, "stylish");
         assertEquals(expectedDiff, diff);
     }
 

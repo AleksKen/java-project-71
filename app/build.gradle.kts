@@ -19,6 +19,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
     implementation("info.picocli:picocli:4.7.6")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.2")
+    implementation("org.apache.commons:commons-lang3:3.16.0")
 }
 
 application {
