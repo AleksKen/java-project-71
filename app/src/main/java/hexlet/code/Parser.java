@@ -6,6 +6,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Parser {
     private static final String JSON = "json";
@@ -13,15 +14,15 @@ public class Parser {
     private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
     private static final ObjectMapper YAML_MAPPER = new ObjectMapper(new YAMLFactory());
 
-    private static HashMap<String, Object> parseFileJson(Path file) throws Exception {
+    private static Map<String, Object> parseFileJson(Path file) throws Exception {
         return JSON_MAPPER.readValue(file.toFile(), HashMap.class);
     }
 
-    private static HashMap<String, Object> parseFileYaml(Path file) throws Exception {
+    private static Map<String, Object> parseFileYaml(Path file) throws Exception {
         return YAML_MAPPER.readValue(file.toFile(), HashMap.class);
     }
 
-    public static HashMap<String, Object> parseFile(Path file) throws Exception {
+    public static Map<String, Object> parseFile(Path file) throws Exception {
         return switch (FilenameUtils.getExtension(String.valueOf(file))) {
             case JSON -> parseFileJson(file);
             case YAML -> parseFileYaml(file);
